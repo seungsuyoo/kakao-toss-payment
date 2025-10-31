@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  kakaoId      String   @unique
+  name         String?
+  profileImage String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  orders       Order[]
+
+  @@map("users")
+}
+
+model Order {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  orderId     String    @unique
+  orderName   String
+  amount      Int
+  status      String    @default("PENDING")
+  paymentKey  String?
+  requestedAt DateTime  @default(now())
+  approvedAt  DateTime?
+
+  @@map("orders")
+}
