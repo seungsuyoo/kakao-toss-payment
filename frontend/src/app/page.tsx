@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import KakaoLoginButton from '@/components/KakaoLoginButton';
 import { api } from '@/lib/api';
+import PaymentButton from '@/components/PaymentButton';
 
 interface UserProfile {
   id: string;
@@ -93,15 +94,15 @@ export default function Home() {
         {user && (
           <div className="bg-white rounded-lg shadow-lg p-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">결제 테스트</h2>
-            <p className="text-gray-600 mb-4">로그인 완료 후 결제 기능을 사용할 수 있습니다</p>
-            <button
-              onClick={() => {
-                /* 다음 섹션에서 구현 */
-              }}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              결제하기
-            </button>
+            <div className="mb-4">
+              <p className="text-gray-600 mb-2">상품명</p>
+              <p className="text-lg font-semibold">테스트 상품</p>
+            </div>
+            <div className="mb-6">
+              <p className="text-gray-600 mb-2">결제 금액</p>
+              <p className="text-2xl font-bold text-blue-600">10,000원</p>
+            </div>
+            <PaymentButton userId={user.id} orderName="테스트 상품" amount={10000} />
           </div>
         )}
       </div>
